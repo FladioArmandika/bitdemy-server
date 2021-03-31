@@ -1,0 +1,1 @@
+{"version":3,"file":"video.js","sourceRoot":"","sources":["../../src/controllers/video.ts"],"names":[],"mappings":";;AACA,6BAA6B;AAC7B,MAAqB,eAAe;IAApC;QAEW,aAAQ,GAAG,CAAC,GAAY,EAAE,GAAa,EAAE,EAAE;YAC9C,GAAG,CAAC,QAAQ,CAAC,IAAI,CAAC,OAAO,CAAC,SAAS,GAAG,uBAAuB,CAAC,CAAC,CAAC;QACpE,CAAC,CAAA;IACL,CAAC;CAAA;AALD,kCAKC"}

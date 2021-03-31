@@ -1,0 +1,1 @@
+{"version":3,"file":"video.js","sourceRoot":"","sources":["../../../src/routes/api/video.ts"],"names":[],"mappings":";;AAAA,qCAAiC;AACjC,mDAAsD;AAEtD,MAAqB,WAAW;IAAhC;QAEY,oBAAe,GAAoB,IAAI,eAAe,EAAE,CAAC;IASrE,CAAC;IAPU,SAAS;QACZ,MAAM,MAAM,GAAW,gBAAM,EAAE,CAAC;QAChC,MAAM,CAAC,GAAG,CAAC,GAAG,EAAE,IAAI,CAAC,eAAe,CAAC,QAAQ,CAAC,CAAC;QAE/C,OAAO,MAAM,CAAC;IAClB,CAAC;CAEJ;AAXD,8BAWC"}
