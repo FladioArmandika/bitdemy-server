@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as passport from "passport";
 import AuthController from "../../controllers/auth";
+import passport from "../../common/passport";
 
 export default class AuthRoutes {
 
@@ -14,6 +14,6 @@ export default class AuthRoutes {
             this.authController.authenticateCallback
             )
         return router;
-    }
+    }   
 
 }
