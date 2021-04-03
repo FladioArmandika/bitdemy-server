@@ -1,6 +1,6 @@
 import { Error } from "mongoose";
 import * as passport from "passport";
-import { Profile, Strategy } from "passport-google-oauth20";
+import { Profile, Strategy, VerifyCallback } from "passport-google-oauth20";
 import User, { UserDocument } from "../models/user";
 import UserService from "../services/user";
 import { mongoError } from "./service";
@@ -14,34 +14,43 @@ passport.deserializeUser( (user, done) => {
     done(null, user);
 })
 
+// tslint:disable-next-line:no-console
+console.log(process.env.GOOGLE_CLIENT_ID)
+// tslint:disable-next-line:no-console
+console.log(process.env.GOOGLE_CLIENT_SECRET)
+// tslint:disable-next-line:no-console
+console.log(process.env.GOOGLE_CALLBACK_URL)
+
+
 passport.use(new Strategy(
     {
-        clientID: '',
-        clientSecret: '',
-        callbackURL: '',
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
-    (accessToken: string, refreshToken: string, 
-        profile: Profile, callback: any) => {
+    (accessToken: string, refreshToken: string,
+        profile: Profile, callback: VerifyCallback) => {
         const userService: UserService = new UserService();
 
-        userService.getUser({email: profile.emails[0]}, (error: Error, userData: UserDocument) => {
+        userService.getUser({email: profile.emails[0].value}, (error: Error, userData: UserDocument) => {
             if (error) {
-                mongoError(error, callback);
+                return callback(error, {})
             } else {
                 if (userData) {
-                    callback(null, profile);
+                    return callback(null, profile);
                 } else {
                     // USER DOESN'T EXIST
                     const userNew: UserDocument = new User({
-                        email: profile.emails[0],
-                        name: profile.name,
+                        email: profile.emails[0].value,
+                        name: profile.username,
+                        profileUrl: profile.photos[0].value,
                     })
 
-                    userService.createUser(userNew, (errorCreate: any, userCreated: UserDocument) => {
+                    return userService.createUser(userNew, (errorCreate: any, userCreated: UserDocument) => {
                         if (errorCreate) {
-                            mongoError(errorCreate, callback);
+                            return callback(errorCreate, {});
                         } else {
-                            callback(null, profile);
+                            return callback(null, profile);
                         }
                     })
                 }
@@ -49,5 +58,5 @@ passport.use(new Strategy(
         })
     }
 ))
-  
+
 export default passport;

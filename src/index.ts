@@ -1,8 +1,10 @@
 import * as dotenv from 'dotenv';
-import app from './config/app';
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+import app from './config/app';
+
+
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
     // tslint:disable-next-line:no-console

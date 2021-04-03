@@ -14,6 +14,6 @@ export default class AuthRoutes {
             this.authController.authenticateCallback
             )
         return router;
-    }   
+    }
 
 }

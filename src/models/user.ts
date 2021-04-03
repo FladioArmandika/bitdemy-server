@@ -7,6 +7,7 @@ export interface UserDocument extends Document {
     email: string,
     password: string,
     username: string,
+    profileUrl: string,
     courses: CourseDocument['_id'][],
     progressVideos: ProgressVideoDocument['_id'][],
     ratings: RatingDocument['_id'][],
@@ -21,6 +22,10 @@ const userSchema: Schema = new Schema({
     },
     username: {
         type: String,
+    },
+    profileUrl: {
+        type: String,
+        default: '',
     },
     courses: [
         {
