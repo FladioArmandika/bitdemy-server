@@ -2,17 +2,21 @@ import Course, { CourseDocument } from "../models/course";
 
 export default class CourseService {
 
-    public createCourse(courseParams: CourseDocument, callback: any) {
+    public createCourse(courseParams: CourseDocument) {
         const session = new Course(courseParams);
         session.save();
     }
 
     public getCourse(query: any, callback: any) {
-        Course.findOne(query, callback);
+        Course.findOne(query)
+            .populate('videos')
+            .populate('category')
+            .exec(callback);
     }
 
     public getCourseByCategory(categoryId: string, callback: any) {
-        Course.find({category: categoryId}, callback);
+        Course.find({category: categoryId})
+            .exec(callback);
     }
 
     public deleteCourse(courseId: string, callback: any) {

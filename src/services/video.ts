@@ -8,7 +8,12 @@ export default class VideoService {
     }
 
     public getVideo(query: any, callback: any) {
-        Video.findOne(query, callback);
+        Video.findOne(query)
+            .populate('course');
+    }
+
+    public getVideoByCourse(courseId: string, callback: any) {
+        Video.findOne({course: courseId}, callback);
     }
 
     public deleteVideo(videoId: string, callback: any) {
