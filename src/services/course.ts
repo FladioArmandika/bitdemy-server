@@ -11,6 +11,10 @@ export default class CourseService {
         Course.findOne(query, callback);
     }
 
+    public getCourseByCategory(categoryId: string, callback: any) {
+        Course.find({category: categoryId}, callback);
+    }
+
     public deleteCourse(courseId: string, callback: any) {
         const query = { _id: courseId }
         Course.deleteOne(query, callback);
