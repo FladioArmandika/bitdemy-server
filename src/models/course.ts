@@ -25,7 +25,7 @@ const courseSchema: Schema = new Schema({
     },
     category: {
         type: Schema.Types.ObjectId,
-        ref: 'Course'
+        ref: 'Category'
     },
     level: {
         type: Schema.Types.String,

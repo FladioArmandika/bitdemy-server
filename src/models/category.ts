@@ -3,14 +3,14 @@ import { CourseDocument } from "./course";
 
 export interface CategoryDocument extends Document {
     name: string,
-    course: CourseDocument['_id'][],
+    courses: CourseDocument['_id'][],
 }
 
-const CategorySchema = new Schema({
+const CategorySchema: Schema = new Schema({
     name: {
         type: String,
     },
-    course: [
+    courses: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Course'
