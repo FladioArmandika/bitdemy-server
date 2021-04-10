@@ -29,8 +29,8 @@ export default class CourseController {
     }
 
     public getCourse(req: Request, res: Response) {
-        if (req.params.courseId) {
-            const query = { _id: req.params.courseId };
+        if (req.query.courseId) {
+            const query = { _id: req.body.courseId };
             this.courseService.getCourse(query, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
@@ -44,8 +44,8 @@ export default class CourseController {
     }
 
     public getCourseByCategory(req: Request, res: Response) {
-        if (req.params.categoryId) {
-            this.courseService.getCourseByCategory(req.params.categoryId, (err: Error, course: CourseDocument) => {
+        if (req.query.categoryId) {
+            this.courseService.getCourseByCategory(req.body.categoryId, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
                 } else {
@@ -58,8 +58,8 @@ export default class CourseController {
     }
 
     public deleteCourse(req: Request, res: Response) {
-        if (req.params.courseId) {
-            this.courseService.deleteCourse(req.params.courseId, (err: Error, course: CourseDocument) => {
+        if (req.query.courseId) {
+            this.courseService.deleteCourse(req.body.courseId, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
                 } else {2
@@ -72,9 +72,9 @@ export default class CourseController {
     }
 
     public updateCourse(req: Request, res: Response) {
-        if (req.params.courseId) {
+        if (req.query.courseId) {
             if (req.body.name || req.body.category || req.body.level) {
-                this.courseService.getCourse(req.params.courseId, (err: Error, courseFound: CourseDocument) => {
+                this.courseService.getCourse(req.body.courseId, (err: Error, courseFound: CourseDocument) => {
                     if (err) {
                         mongoError(err, res);
                     } else {
@@ -83,7 +83,7 @@ export default class CourseController {
                         if (req.body.category) updated.category = req.body.category;
                         if (req.body.level) updated.level = req.body.level;
 
-                        this.courseService.updateCourse(req.params.courseId, updated, (err: Error, result: CourseDocument) => {
+                        this.courseService.updateCourse(req.body.courseId, updated, (err: Error, result: CourseDocument) => {
                             if (err) {
                                 mongoError(err, res);
                             } else {
