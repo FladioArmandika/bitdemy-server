@@ -16,7 +16,7 @@ export interface CourseDocument extends Document {
     levels: CourseLevel,
     ratings: RatingDocument['_id'][],
     videos: VideoDocument['_id'][],
-    
+
 }
 
 const courseSchema: Schema = new Schema({

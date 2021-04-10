@@ -2,9 +2,9 @@ import Course, { CourseDocument } from "../models/course";
 
 export default class CourseService {
 
-    public createCourse(courseParams: CourseDocument) {
+    public createCourse(courseParams: CourseDocument, callback: any) {
         const session = new Course(courseParams);
-        session.save();
+        session.save().then(callback);
     }
 
     public getCourse(query: any, callback: any) {
