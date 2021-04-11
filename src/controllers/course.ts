@@ -8,7 +8,7 @@ export default class CourseController {
 
     private courseService: CourseService = new CourseService();
 
-    public createCourse(req: Request, res: Response) {
+    public createCourse = (req: Request, res: Response) => {
         if (req.body.name && req.body.category && req.body.level) {
             const course: CourseDocument = new Course({
                 name: req.body.name,
@@ -28,9 +28,9 @@ export default class CourseController {
         }
     }
 
-    public getCourse(req: Request, res: Response) {
+    public getCourse = (req: Request, res: Response) => {
         if (req.query.courseId) {
-            const query = { _id: req.body.courseId };
+            const query = { _id: req.query.courseId };
             this.courseService.getCourse(query, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
@@ -43,9 +43,9 @@ export default class CourseController {
         }
     }
 
-    public getCourseByCategory(req: Request, res: Response) {
+    public getCourseByCategory = (req: Request, res: Response) => {
         if (req.query.categoryId) {
-            this.courseService.getCourseByCategory(req.body.categoryId, (err: Error, course: CourseDocument) => {
+            this.courseService.getCourseByCategory(req.query.categoryId as string, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
                 } else {
@@ -57,12 +57,12 @@ export default class CourseController {
         }
     }
 
-    public deleteCourse(req: Request, res: Response) {
+    public deleteCourse = (req: Request, res: Response) => {
         if (req.query.courseId) {
-            this.courseService.deleteCourse(req.body.courseId, (err: Error, course: CourseDocument) => {
+            this.courseService.deleteCourse(req.query.courseId as string, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
-                } else {2
+                } else {
                     successResponse('delete course success', course, res);
                 }
             })
@@ -71,21 +71,21 @@ export default class CourseController {
         }
     }
 
-    public updateCourse(req: Request, res: Response) {
+    public updateCourse = (req: Request, res: Response) => {
         if (req.query.courseId) {
             if (req.body.name || req.body.category || req.body.level) {
-                this.courseService.getCourse(req.body.courseId, (err: Error, courseFound: CourseDocument) => {
+                this.courseService.getCourse(req.query.courseId as string, (err: Error, courseFound: CourseDocument) => {
                     if (err) {
                         mongoError(err, res);
                     } else {
-                        var updated:any = {}
+                        const updated:any = {}
                         if (req.body.name) updated.name = req.body.name;
                         if (req.body.category) updated.category = req.body.category;
                         if (req.body.level) updated.level = req.body.level;
 
-                        this.courseService.updateCourse(req.body.courseId, updated, (err: Error, result: CourseDocument) => {
-                            if (err) {
-                                mongoError(err, res);
+                        this.courseService.updateCourse(req.query.courseId as string, updated, (errUpdate: Error, result: CourseDocument) => {
+                            if (errUpdate) {
+                                mongoError(errUpdate, res);
                             } else {
                                 successResponse('update course success', updated, res);
                             }
