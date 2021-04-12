@@ -7,9 +7,9 @@ export default class CourseService {
         session.save().then(callback);
     }
 
-    public getCourse(query: any, callback: any) {
-        Course.findOne(query)
-            .populate('videos')
+    public getCourse(courseId: string, callback: any) {
+        Course.findOne({_id: courseId})
+            .populate('video')
             .populate('category')
             .exec(callback);
     }

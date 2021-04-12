@@ -30,8 +30,7 @@ export default class CourseController {
 
     public getCourse = (req: Request, res: Response) => {
         if (req.query.courseId) {
-            const query = { _id: req.query.courseId };
-            this.courseService.getCourse(query, (err: Error, course: CourseDocument) => {
+            this.courseService.getCourse(req.query.courseId as string, (err: Error, course: CourseDocument) => {
                 if (err) {
                     mongoError(err, res)
                 } else {

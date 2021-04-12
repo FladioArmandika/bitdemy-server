@@ -3,6 +3,6 @@ import * as path from 'path';
 export default class VideoController {
 
     public getVideo = (req: Request, res: Response) => {
-        res.sendFile(path.resolve(__dirname + '/../assets/sample.mp4'));
+        res.sendFile(path.resolve(__dirname + '/../assets/vid1.mp4'));
     }
 }

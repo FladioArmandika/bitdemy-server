@@ -26,7 +26,7 @@ export function insufficientParameters(res: Response) {
 export function mongoError(err: any, res: Response) {
     res.status(500).json({
         status: 'FAILURE',
-        message: 'MongoDB error',
+        message: 'MongoDB error : ' + err,
         data: err,
     });
 }

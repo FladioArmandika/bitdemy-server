@@ -1,7 +1,6 @@
 import { Document, model, Schema } from "mongoose";
 import { CategoryDocument } from "./category";
 import { RatingDocument } from "./rating";
-import { UserDocument } from "./user";
 import { VideoDocument } from "./video";
 
 enum CourseLevel {
