@@ -4,16 +4,17 @@ export default class VideoService {
 
     public createVideo(videoParams: VideoDocument, callback: any) {
         const session = new Video(videoParams);
-        session.save();
+        session.save(callback);
     }
 
     public getVideo(query: any, callback: any) {
         Video.findOne(query)
-            .populate('course');
+            .populate('course')
+            .exec(callback);
     }
 
-    public getVideoByCourse(courseId: string, callback: any) {
-        Video.findOne({course: courseId}, callback);
+    public getVideosByCourse(courseId: string, callback: any) {
+        Video.find({course: courseId}, callback);
     }
 
     public deleteVideo(videoId: string, callback: any) {
