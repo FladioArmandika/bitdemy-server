@@ -1,6 +1,7 @@
-import { Document, model, Schema } from "mongoose";
-import { CourseDocument } from "./course";
-import { UserDocument } from "./user";
+import { NextFunction } from "express";
+import { Document, Error, model, Schema } from "mongoose";
+import Course, { CourseDocument } from "./course";
+import User, { UserDocument } from "./user";
 
 export interface RatingDocument extends Document {
     user: UserDocument['_id'],
@@ -27,6 +28,31 @@ const ratingSchema: Schema = new Schema({
         type: Schema.Types.String
     },
 });
+
+ratingSchema.pre('save', (next: NextFunction) => {
+    const rating: RatingDocument = this;
+    // UPDATE USER
+    User.findOneAndUpdate(
+        { _id: rating.user },
+        { $push: { ratings: rating._id } },
+        { upsert: false },
+        ( errUser: Error, user: UserDocument) => {
+            if (!errUser) {
+                // UPDATE COURSE
+                Course.findOneAndUpdate(
+                    { _id: rating.course },
+                    { $push: { ratings: rating._id } },
+                    { upsert: false },
+                    ( errCourse: Error, course: CourseDocument) => {
+                        if (!errCourse) {
+                            next();  
+                        }
+                    }
+                )
+            }
+        }
+    )
+})
 
 
 const Rating = model<RatingDocument>('Rating', ratingSchema);

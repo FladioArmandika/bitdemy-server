@@ -1,5 +1,6 @@
-import { Document, model, Schema } from "mongoose";
-import { CourseDocument } from "./course";
+import { NextFunction } from "express";
+import { Document, Error, model, Schema } from "mongoose";
+import Course, { CourseDocument } from "./course";
 import { RatingDocument } from "./rating";
 
 
@@ -29,6 +30,20 @@ const videoSchema: Schema = new Schema({
         type: Schema.Types.Number
     },
 });
+
+videoSchema.pre('save', (next: NextFunction) => {
+    const video: VideoDocument = this;
+    // UPDATE COURSE
+    Course.findOneAndUpdate(
+        { _id: video.course }, 
+        { $push: {videos: video._id } },
+        { upsert: false },
+        (err: Error, course: CourseDocument) => {
+            if (!err) {
+                next();
+            }
+        })
+})
 
 const Video = model<VideoDocument>('Video', videoSchema);
 export default Video;

@@ -44,7 +44,7 @@ export default class VideoController {
     }
 
     public createVideo = (req: Request, res: Response) => {
-        if (req.body.title && req.body.description && 
+        if (req.body.title && req.body.description &&
             req.body.course && req.body.url && req.body.length) {
             const videoParams: VideoDocument = new Video({
                 title: req.body.title,
@@ -82,7 +82,7 @@ export default class VideoController {
 
     public updateVideo = (req: Request, res: Response) => {
         if (req.query.videoId) {
-            if (req.body.title || req.body.description || 
+            if (req.body.title || req.body.description ||
                 req.body.course || req.body.url || req.body.length) {
 
                 const updateParams: any = {};

@@ -1,11 +1,9 @@
 import { Router } from "express";
 import CourseController from "../../controllers/course";
 
-
 export default class CourseRoutes {
 
     private courseController: CourseController = new CourseController();
-
 
     public getRoutes = (): Router  => {
         const router: Router = Router();

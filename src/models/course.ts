@@ -1,5 +1,6 @@
-import { Document, model, Schema } from "mongoose";
-import { CategoryDocument } from "./category";
+import { NextFunction } from "express";
+import { Document, Error, model, Schema } from "mongoose";
+import Category, { CategoryDocument } from "./category";
 import { RatingDocument } from "./rating";
 import { VideoDocument } from "./video";
 
@@ -44,6 +45,21 @@ const courseSchema: Schema = new Schema({
         }
     ],
 });
+
+courseSchema.pre('save', (next: NextFunction) => {
+    const course: CourseDocument = this;
+    // UPDATE
+    Category.findOneAndUpdate(
+        { _id: course.category },
+        { $push: { courses: course._id } },
+        { upsert: false },
+        ( err: Error, category: CategoryDocument) => {
+            if (!err) {
+                next();
+            }
+        }
+    ) 
+})
 
 const Course = model<CourseDocument>('Course', courseSchema);
 export default Course;
