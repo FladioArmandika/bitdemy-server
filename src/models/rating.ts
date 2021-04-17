@@ -29,7 +29,7 @@ const ratingSchema: Schema = new Schema({
     },
 });
 
-ratingSchema.pre('save', (next: NextFunction) => {
+ratingSchema.pre<RatingDocument>('save', function (next: NextFunction) {
     const rating: RatingDocument = this;
     // UPDATE USER
     User.findOneAndUpdate(

@@ -14,10 +14,15 @@ export default class CourseController {
                 name: req.body.name,
                 category: req.body.category,
                 level: req.body.level,
+                ratings: [],
+                videos: [],
             })
 
             this.courseService.createCourse(course, (err: Error, data: CourseDocument) => {
                 if (err) {
+                    // tslint:disable-next-line:no-console
+                    // console.log(data);
+
                     mongoError(err, res)
                 } else {
                     successResponse('Create course success', data, res);

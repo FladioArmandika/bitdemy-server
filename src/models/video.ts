@@ -31,7 +31,7 @@ const videoSchema: Schema = new Schema({
     },
 });
 
-videoSchema.pre('save', (next: NextFunction) => {
+videoSchema.pre<VideoDocument>('save', function (next: NextFunction) {
     const video: VideoDocument = this;
     // UPDATE COURSE
     Course.findOneAndUpdate(

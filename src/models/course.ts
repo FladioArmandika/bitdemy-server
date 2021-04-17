@@ -46,19 +46,21 @@ const courseSchema: Schema = new Schema({
     ],
 });
 
-courseSchema.pre('save', (next: NextFunction) => {
+courseSchema.pre<CourseDocument>('save', function (next: NextFunction) {
     const course: CourseDocument = this;
+
     // UPDATE
     Category.findOneAndUpdate(
         { _id: course.category },
         { $push: { courses: course._id } },
-        { upsert: false },
-        ( err: Error, category: CategoryDocument) => {
-            if (!err) {
-                next();
-            }
-        }
-    )
+        { upsert: false })
+        .then( (category: CategoryDocument) => {
+            next();
+        })
+        .catch(err => {
+            // tslint:disable-next-line:no-console
+            console.log(err);
+        } )
 })
 
 const Course = model<CourseDocument>('Course', courseSchema);
