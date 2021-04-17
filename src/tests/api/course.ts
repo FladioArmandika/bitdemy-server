@@ -3,7 +3,7 @@ import * as request from "supertest"
 import { Response, Request } from "express"
 import path = require("path")
 
-require('dotenv').config({ path: path.resolve(__dirname, './.env')})
+require('dotenv').config({ path: path.resolve(__dirname, './.env')});
 
 jest.setTimeout(10000);
 
