@@ -45,7 +45,7 @@ ratingSchema.pre('save', (next: NextFunction) => {
                     { upsert: false },
                     ( errCourse: Error, course: CourseDocument) => {
                         if (!errCourse) {
-                            next();  
+                            next();
                         }
                     }
                 )

@@ -35,7 +35,7 @@ videoSchema.pre('save', (next: NextFunction) => {
     const video: VideoDocument = this;
     // UPDATE COURSE
     Course.findOneAndUpdate(
-        { _id: video.course }, 
+        { _id: video.course },
         { $push: {videos: video._id } },
         { upsert: false },
         (err: Error, course: CourseDocument) => {

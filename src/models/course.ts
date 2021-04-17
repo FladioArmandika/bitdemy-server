@@ -58,7 +58,7 @@ courseSchema.pre('save', (next: NextFunction) => {
                 next();
             }
         }
-    ) 
+    )
 })
 
 const Course = model<CourseDocument>('Course', courseSchema);
