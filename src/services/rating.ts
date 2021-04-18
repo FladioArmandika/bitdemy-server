@@ -25,7 +25,7 @@ export default class RatingService {
 
     public createRating(ratingParams: RatingDocument, callback: any) {
         const rating: RatingDocument = new Rating(ratingParams);
-        rating.save();
+        rating.save().then(callback);
     }
 
     public deleteRating(ratingId: string, callback: any) {

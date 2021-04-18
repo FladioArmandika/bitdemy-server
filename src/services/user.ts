@@ -4,7 +4,7 @@ export default class UserService {
 
     public createUser(userParams: UserDocument, callback: any) {
         const session = new User(userParams);
-        session.save();
+        session.save().then(callback);
     }
 
     public getUser(query: any, callback: any) {

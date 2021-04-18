@@ -4,7 +4,7 @@ export default class VideoService {
 
     public createVideo(videoParams: VideoDocument, callback: any) {
         const session = new Video(videoParams);
-        session.save(callback);
+        session.save().then(callback);
     }
 
     public getVideo(query: any, callback: any) {

@@ -16,7 +16,7 @@ export default class CategoryService {
 
     public createCategory(categoryParams: CategoryDocument, callback: any) {
         const session = new Category(categoryParams);
-        session.save(callback);
+        session.save().then(callback);
     }
 
     public deleteCategory(categoryId: string, callback:any) {

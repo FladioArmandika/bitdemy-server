@@ -18,13 +18,8 @@ export default class CourseController {
                 videos: [],
             })
 
-            this.courseService.createCourse(course, (err: Error, data: CourseDocument) => {
-                if (err) {
-                    // tslint:disable-next-line:no-console
-                    // console.log(data);
-
-                    mongoError(err, res)
-                } else {
+            this.courseService.createCourse(course, (data: CourseDocument) => {
+                if (data) {
                     successResponse('Create course success', data, res);
                 }
             })

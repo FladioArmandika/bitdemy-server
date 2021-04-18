@@ -14,10 +14,8 @@ export default class CategoryController {
                 name: req.body.name,
                 courses: []
             })
-            this.categoryService.createCategory(category, (err: Error, data: CategoryDocument) => {
-                if (err) {
-                    mongoError(err, res)
-                } else {
+            this.categoryService.createCategory(category, (data: CategoryDocument) => {
+                if (data) {
                     successResponse('Create category success', data, res);
                 }
             });

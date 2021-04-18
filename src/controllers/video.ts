@@ -54,10 +54,8 @@ export default class VideoController {
                 length: req.body.length,
             });
 
-            this.videoService.createVideo(videoParams, (error: Error, video: VideoDocument) => {
-                if (error) {
-                    mongoError(error, res);
-                } else {
+            this.videoService.createVideo(videoParams, (video: VideoDocument) => {
+                if (video) {
                     successResponse('create video success', video, res);
                 }
             })
