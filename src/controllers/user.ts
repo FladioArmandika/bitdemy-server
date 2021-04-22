@@ -9,8 +9,10 @@ export default class UserController {
     private userService: UserService = new UserService();
 
     public getUser = (req: Request, res: Response) => {
-        if (req.query.userId) {
-            const query = { _id: req.query.userId }
+        if (req.query.userId || req.query.googleId) {
+            let query = {};
+            if (req.query.userId) query = { _id: req.query.userId }
+            if (req.query.googleId) query = { googleId: req.query.googleId }
             this.userService.getUser(query, (err: Error, user: UserDocument) => {
                 if (err) {
                     mongoError(err, res);

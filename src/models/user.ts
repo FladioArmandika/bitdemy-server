@@ -6,6 +6,7 @@ import { RatingDocument } from "./rating";
 export interface UserDocument extends Document {
     email: string,
     password: string,
+    googleId: string,
     username: string,
     profileUrl: string,
     courses: CourseDocument['_id'][],
@@ -19,6 +20,9 @@ const userSchema: Schema = new Schema({
     },
     password: {
         type: String,
+    },
+    googleId: {
+        type: String
     },
     username: {
         type: String,
