@@ -9,7 +9,7 @@ export default class CourseService {
 
     public getCourse(courseId: string, callback: any) {
         Course.findOne({_id: courseId})
-            .populate('video')
+            .populate('videos')
             .populate('category')
             .exec(callback);
     }

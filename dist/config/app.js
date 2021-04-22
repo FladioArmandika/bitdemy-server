@@ -5,6 +5,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const routes_1 = require("../routes");
 class App {
     constructor() {
@@ -16,6 +17,7 @@ class App {
         this.appRoutes.route(this.app);
     }
     config() {
+        this.app.use(cors());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(passport.initialize());

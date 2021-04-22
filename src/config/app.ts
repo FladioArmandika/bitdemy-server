@@ -3,6 +3,7 @@ import * as passport from 'passport';
 import * as mongoose from 'mongoose';
 import * as express from 'express';
 import * as dotenv from 'dotenv';
+import * as cors from 'cors';
 
 import { AppRoutes } from '../routes';
 
@@ -21,6 +22,7 @@ class App {
     }
 
     private config(): void {
+        this.app.use(cors());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended:false}));
         this.app.use(passport.initialize());

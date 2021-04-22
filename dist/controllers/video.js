@@ -53,11 +53,8 @@ class VideoController {
                     url: req.body.url,
                     length: req.body.length,
                 });
-                this.videoService.createVideo(videoParams, (error, video) => {
-                    if (error) {
-                        service_1.mongoError(error, res);
-                    }
-                    else {
+                this.videoService.createVideo(videoParams, (video) => {
+                    if (video) {
                         service_1.successResponse('create video success', video, res);
                     }
                 });
