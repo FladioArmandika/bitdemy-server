@@ -19,12 +19,13 @@ passport.use(new Strategy(
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL,
+        passReqToCallback: true
     },
-    (accessToken: string, refreshToken: string,
+    (request, accessToken: string, refreshToken: string,
         profile: Profile, callback: VerifyCallback) => {
         const userService: UserService = new UserService();
 
-        userService.getUser({email: profile.emails[0].value}, (error: Error, userData: UserDocument) => {
+        userService.getUser({googleId: profile.id}, (error: Error, userData: UserDocument) => {
             if (error) {
                 return callback(error, {})
             } else {
@@ -35,13 +36,12 @@ passport.use(new Strategy(
                     const userNew: UserDocument = new User({
                         email: profile.emails[0].value,
                         name: profile.username,
+                        googleId: profile.id,
                         profileUrl: profile.photos[0].value,
                     })
 
-                    return userService.createUser(userNew, (errorCreate: any, userCreated: UserDocument) => {
-                        if (errorCreate) {
-                            return callback(errorCreate, {});
-                        } else {
+                    return userService.createUser(userNew, (userCreated: UserDocument) => {
+                        if (userCreated) {
                             return callback(null, profile);
                         }
                     })
