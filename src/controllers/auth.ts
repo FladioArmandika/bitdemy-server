@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { failureResponse, mongoError, successResponse } from "../common/service";
+import { failureResponse, insufficientParameters, mongoError, successResponse } from "../common/service";
 import passport from "../common/passport";
 import JWTToken from "../common/jwttoken";
 import * as url from 'url'
@@ -27,6 +27,23 @@ export default class AuthController {
                 }
             })
         })(req, res, next);
+    }
+
+    public verifyUser = (req: Request, res: Response) => {
+        if (req.get('Authorization')) {
+            const token = req.get('Authorization');
+            const tokenArray = token.split(" ");
+
+            const decoded = this.jwtToken.verifyToken(tokenArray[1])
+
+            if (decoded) {
+                successResponse('', decoded, res)
+            } else {
+                failureResponse('failed to verify token', {}, res)
+            }
+        } else {
+            insufficientParameters(res);
+        }
     }
 
 }

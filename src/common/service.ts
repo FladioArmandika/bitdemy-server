@@ -3,6 +3,7 @@ import { Response } from "express";
 
 export function successResponse(message: string, DATA: any, res: Response) {
     res.status(200).json({
+        success: true,
         status: 'SUCCESS',
         message,
         data: DATA
@@ -11,6 +12,7 @@ export function successResponse(message: string, DATA: any, res: Response) {
 
 export function failureResponse(message: string, DATA: any, res: Response) {
     res.status(200).json({
+        success: false,
         status: 'FAILURE'
     })
 }

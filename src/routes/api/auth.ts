@@ -10,7 +10,8 @@ export default class AuthRoutes {
     public getRoutes() {
         const router: Router = Router();
         router.get('/google', passport.authenticate('google', { scope: ['profile','email'] }));
-        router.get('/google/callback', this.authController.authenticateCallback)
+        router.get('/google/callback', this.authController.authenticateCallback);
+        router.get('/token/verify', this.authController.verifyUser);
 
         return router;
     }
