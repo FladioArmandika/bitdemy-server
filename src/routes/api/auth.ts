@@ -10,11 +10,8 @@ export default class AuthRoutes {
     public getRoutes() {
         const router: Router = Router();
         router.get('/google', passport.authenticate('google', { scope: ['profile','email'] }));
-        // router.get('/google/callback',
-        //     passport.authenticate('google', {}),
-        //     this.authController.authenticateCallback
-        //     )
         router.get('/google/callback', this.authController.authenticateCallback)
+
         return router;
     }
 
