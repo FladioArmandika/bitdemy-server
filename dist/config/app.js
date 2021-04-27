@@ -18,7 +18,7 @@ class App {
         this.appRoutes.route(this.app);
     }
     config() {
-        this.app.use(cors());
+        this.app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
         this.app.use(cookieParser());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));

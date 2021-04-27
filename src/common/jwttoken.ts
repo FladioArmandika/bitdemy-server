@@ -20,8 +20,8 @@ export default class JWTToken {
         return token;
     }
 
-    public verifyToken = (token: string) => {
-        return jwt.verify(token, process.env.JWT_SECRET)
-    }
+    // public verifyToken = (token: string) => {
+
+    // }
 
 }

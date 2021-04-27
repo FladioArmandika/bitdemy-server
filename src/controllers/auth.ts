@@ -6,6 +6,7 @@ import * as url from 'url'
 import UserService from "../services/user";
 import { Error } from "mongoose";
 import { UserDocument } from "../models/user";
+import * as jwt from "jsonwebtoken"
 
 export default class AuthController {
 
@@ -22,7 +23,10 @@ export default class AuthController {
                     const accessToken = this.jwtToken.generateAccessToken(userDoc)
                     // const refreshToken = this.jwtToken.generateRefreshToken(userDoc)
 
-                    res.cookie('accessToken', accessToken, { httpOnly: true });
+                    res.cookie('accessToken', accessToken, {
+                        httpOnly: true,
+                        maxAge: 60 * 1000 * 1000
+                    });
                     res.redirect('http://localhost:3000/login/success')
                 }
             })
@@ -30,19 +34,19 @@ export default class AuthController {
     }
 
     public verifyUser = (req: Request, res: Response) => {
-        if (req.get('Authorization')) {
-            const token = req.get('Authorization');
-            const tokenArray = token.split(" ");
 
-            const decoded = this.jwtToken.verifyToken(tokenArray[1])
-
-            if (decoded) {
-                successResponse('', decoded, res)
-            } else {
-                failureResponse('failed to verify token', {}, res)
-            }
+        if (req.cookies.accessToken) {
+            const token = req.cookies.accessToken;
+            jwt.verify(token, process.env.JWT_SECRET, (err: any, decoded: any) => {
+                if (err) {
+                    res.clearCookie('accessToken')
+                    failureResponse('session expired', {}, res)
+                } else {
+                    successResponse('', decoded, res)
+                }
+            })
         } else {
-            insufficientParameters(res);
+            failureResponse('verify failed', {}, res)
         }
     }
 
